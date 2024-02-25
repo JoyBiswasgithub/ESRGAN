@@ -37,7 +37,7 @@ def super_resolution(img, device, model):
   result = (result * 255.0).round()
   cv2.imwrite('results/{:s}_sr.png'.format('base'), result)
   return result
-st.write("""  """)
+st.write("""# WELCOME TO IMAGE ENHANCHMENT""")
 
 # load Image
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
