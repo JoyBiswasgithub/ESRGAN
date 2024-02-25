@@ -2,6 +2,5 @@ torch==2.0.1
 opencv-python==4.7.0.68
 streamlit==1.31.0
 numpy
-io
 pillow==9.4.0
 functools
