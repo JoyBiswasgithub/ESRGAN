@@ -7,5 +7,7 @@ ESRGAN architecture consists of a generator network that learns to upscale low-r
 # Few testing
 ## Input Image
 ![Org1](https://github.com/JoyBiswasgithub/ESRGAN/assets/138972138/cedb0665-3077-45d3-9e44-11c4359037c5)
+shape = (225,225,3)
 ## Output Image
 ![Output1](https://github.com/JoyBiswasgithub/ESRGAN/assets/138972138/e80eeaab-fb40-4db4-99da-5701b7d853c9)
+shape = (900,900,3)
