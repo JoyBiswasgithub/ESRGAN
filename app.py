@@ -1,10 +1,9 @@
 import torch
-import cv2
 import streamlit as st
 import numpy as np
 from PIL import Image
 from io import BytesIO
-
+import io
 
 import R as arch
 
@@ -27,6 +26,7 @@ def load_model(model_name, model_dir, device):
 model = load_model(model_name, models_dir, device)
 
 def super_resolution(img, device, model):
+  img = np.array(img)
   img = img * 1.0 / 255
   img = torch.from_numpy(np.transpose(img[:,:, [2,1,0]], (2,0,1))).float()
   LR = img.unsqueeze(0)
@@ -35,22 +35,26 @@ def super_resolution(img, device, model):
     result = model(LR).data.squeeze().float().cpu().clamp_(0, 1).numpy()
   result = np.transpose(result[[2,1,0], :, :], (1,2,0))
   result = (result * 255.0).round()
-  cv2.imwrite('results/{:s}_sr.png'.format('base'), result)
+  #cv2.imwrite('results/{:s}_sr.png'.format('base'), result)
   return result
 st.write("""# WELCOME TO IMAGE ENHANCHMENT""")
 
 # load Image
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
+def decode_image(byte_array):
+    image = Image.open(io.BytesIO(byte_array))
+    return image
 
 
 
 if uploaded_file is not None:
     file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
-    image = cv2.imdecode(file_bytes, 1)
+    #image = cv2.imdecode(file_bytes, 1)
+    image = decode_image(file_bytes)
     st.write("""# Uploaded Image""")
     st.image(uploaded_file, caption=' ', use_column_width=True)
-    st.write("""### Uploaded Image Shape""",image.shape)
+    st.write("""### Uploaded Image Shape""",image.size)
     
     # Showing something until image is processing
     text_placeholder = st.empty()
