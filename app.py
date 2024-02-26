@@ -11,7 +11,7 @@ environment = 'cpu'
 device = torch.device(environment)
 
 model_name = 'RRDB_ESRGAN_x4.pth'
-models_dir = 'model\\'
+models_dir = 'ESRGAN/model/'
 
 model_1 = '{}RRDB_ESRGAN_x4.pth'.format(models_dir)
 
