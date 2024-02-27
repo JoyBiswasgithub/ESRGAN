@@ -11,7 +11,7 @@ environment = 'cpu'
 device = torch.device(environment)
 
 model_name = 'RRDB_ESRGAN_x4.pth'
-models_dir = 'model/'
+models_dir = 'model\\'
 
 model_1 = '{}RRDB_ESRGAN_x4.pth'.format(models_dir)
 
@@ -37,7 +37,7 @@ def super_resolution(img, device, model):
   result = (result * 255.0).round()
   #cv2.imwrite('results/{:s}_sr.png'.format('base'), result)
   return result
-st.write("""# WELCOME TO IMAGE ENHANCEMENT""")
+st.write("""# WELCOME TO IMAGE ENHANCHMENT""")
 
 # load Image
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
@@ -52,37 +52,43 @@ if uploaded_file is not None:
     file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
     #image = cv2.imdecode(file_bytes, 1)
     image = decode_image(file_bytes)
-    st.write("""# Uploaded Image""")
-    st.image(uploaded_file, caption=' ', use_column_width=True)
-    st.write("""### Uploaded Image Shape""",image.size)
-    
-    # Showing something until image is processing
-    text_placeholder = st.empty()
-    text_placeholder.text("""Please wait. Image is processing...""")
-    
-    # call super_regulation function
-    result_sr = super_resolution(image, device, model)
-    
-    
-    if result_sr is not None:
-      result_sr_normalized = result_sr / 255.0
-      st.write("""# Enhanched Image""")
-      st.image(result_sr_normalized, caption=' ', use_column_width=True)
-      st.write("""### Enhanced Image Shape:""", result_sr.shape)
+    uploaded_image = image
+    if image.size[0]<2000 and image.size[1]<2000:
+      if image.size[0]<2000 and image.size[1]<2000 and image.size[0]>600 and image.size[1]>600:
+        image = image.resize((600,600))
+      st.write("""# Uploaded Image""")
+      st.image(uploaded_file, caption=' ', use_column_width=True)
+      st.write("""### Uploaded Image Shape""",uploaded_image.size)
       
-      # Remove waiting text
-      text_placeholder.empty()
-      # Ddownload button creation
-      result_sr = np.array(result_sr, dtype=np.uint8)
+      # Showing something until image is processing
+      text_placeholder = st.empty()
+      text_placeholder.text("""Please wait. Image is processing...""")
       
-      images = Image.fromarray(result_sr)
-      buf = BytesIO()
-      images.save(buf, format="JPEG")
-      byte_im = buf.getvalue()
+      # call super_regulation function
+      result_sr = super_resolution(image, device, model)
       
-      btn = st.download_button(
-      label="Download Image",
-      data=byte_im,
-      file_name="Image.png",
-      mime="image/jpeg",
-      )
+      
+      if result_sr is not None:
+        result_sr_normalized = result_sr / 255.0
+        st.write("""# Enhanched Image""")
+        st.image(result_sr_normalized, caption=' ', use_column_width=True)
+        st.write("""### Enhanched Image Shape:""", result_sr.shape)
+        
+        # Remove waiting text
+        text_placeholder.empty()
+        # Ddownload button creation
+        result_sr = np.array(result_sr, dtype=np.uint8)
+        
+        images = Image.fromarray(result_sr)
+        buf = BytesIO()
+        images.save(buf, format="JPEG")
+        byte_im = buf.getvalue()
+        
+        btn = st.download_button(
+        label="Download Image",
+        data=byte_im,
+        file_name="Image.png",
+        mime="image/jpeg",
+        )
+    else:
+      st.write("### Your image is already enghanced and size is ", uploaded_image.size,". Please, upload low quality image like less than (2000,2000) size")
