@@ -53,8 +53,8 @@ if uploaded_file is not None:
     #image = cv2.imdecode(file_bytes, 1)
     image = decode_image(file_bytes)
     uploaded_image = image
-    if image.size[0]<100 and image.size[1]<100:
-      if image.size[0]<100 and image.size[1]<100 and image.size[0]>100 and image.size[1]>100:
+    if image.size[0]<400 and image.size[1]<400:
+      if image.size[0]>100 and image.size[1]>100:
         image = image.resize((100,100))
       st.write("""# Uploaded Image""")
       st.image(uploaded_file, caption=' ', use_column_width=True)
