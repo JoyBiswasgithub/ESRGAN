@@ -55,7 +55,7 @@ if uploaded_file is not None:
     uploaded_image = image
     if image.size[0]<1000 and image.size[1]<1000:
       if image.size[0]<1000 and image.size[1]<1000 and image.size[0]>1000 and image.size[1]>1000:
-        image = image.resize((300,300))
+        image = image.resize((250,250))
       st.write("""# Uploaded Image""")
       st.image(uploaded_file, caption=' ', use_column_width=True)
       st.write("""### Uploaded Image Shape""",uploaded_image.size)
