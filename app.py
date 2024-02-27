@@ -37,7 +37,7 @@ def super_resolution(img, device, model):
   result = (result * 255.0).round()
   #cv2.imwrite('results/{:s}_sr.png'.format('base'), result)
   return result
-st.write("""# WELCOME TO IMAGE ENHANCHMENT""")
+st.write("""# WELCOME TO IMAGE ENHANCEMENT""")
 
 # load Image
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
@@ -70,9 +70,9 @@ if uploaded_file is not None:
       
       if result_sr is not None:
         result_sr_normalized = result_sr / 255.0
-        st.write("""# Enhanched Image""")
+        st.write("""# Enhanced Image""")
         st.image(result_sr_normalized, caption=' ', use_column_width=True)
-        st.write("""### Enhanched Image Shape:""", result_sr.shape)
+        st.write("""### Enhanced Image Shape:""", result_sr.shape)
         
         # Remove waiting text
         text_placeholder.empty()
