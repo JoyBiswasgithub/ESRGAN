@@ -53,9 +53,9 @@ if uploaded_file is not None:
     #image = cv2.imdecode(file_bytes, 1)
     image = decode_image(file_bytes)
     uploaded_image = image
-    if image.size[0]<1800 and image.size[1]<1800:
-      if image.size[0]<1800 and image.size[1]<1800 and image.size[0]>1800 and image.size[1]>1800:
-        image = image.resize((500,500))
+    if image.size[0]<1000 and image.size[1]<1000:
+      if image.size[0]<1000 and image.size[1]<1000 and image.size[0]>1000 and image.size[1]>1000:
+        image = image.resize((300,300))
       st.write("""# Uploaded Image""")
       st.image(uploaded_file, caption=' ', use_column_width=True)
       st.write("""### Uploaded Image Shape""",uploaded_image.size)
@@ -91,4 +91,4 @@ if uploaded_file is not None:
         mime="image/jpeg",
         )
     else:
-      st.write("### Your image is already enghanced and size is ", uploaded_image.size,". Please, upload low quality image like less than (1800,1800) size")
+      st.write("### Your image is already enghanced and size is ", uploaded_image.size,". Please, upload low quality image like less than (1000,1000) size")
